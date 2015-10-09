@@ -55,5 +55,6 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	ListMsg(msg);
+	cout << msg.DebugString() << endl;
 	return 0;
 }
