@@ -1,17 +1,3 @@
-all: add_person list_people
-
-add_person: addressbook add_person.o AddressBook.pb.o
-	g++ -o $@ add_person.o AddressBook.pb.o -lpthread -lprotobuf -pthread
-list_people: addressbook list_people.o AddressBook.pb.o
-	g++ -o $@ list_people.o AddressBook.pb.o -lpthread -lprotobuf -pthread
-addressbook: AddressBook.proto
-	protoc -I=. --cpp_out=. ./AddressBook.proto
-AddressBook.pb.o:
-	g++ -c AddressBook.pb.cc
-clean:
-	rm -rf AddressBook.pb.o AddressBook.pb.cc AddressBook.pb.h list_people add_person list_people.o add_person.o
-
-
 #本项目相关变量
 ROOT_DIR = .
 
@@ -19,12 +5,12 @@ ROOT_DIR = .
 CXX = g++
 
 #目标文件
-TARGET = reloadlog
+TARGET = test_pb
 
 COMMON_LIB_PATH=${ROOT_DIR}
 
 # proto
-PROTOC_PATH = /data/common/protobuf/
+PROTOC_PATH = /data/common/protobuf
 # proto file .cc .h
 PROTO_PATH = .
 
@@ -38,11 +24,12 @@ STATIC_LIBS_DIR = .
 STATIC_LIBS = $(foreach n,$(STATIC_LIBS_DIR), $(wildcard $(n)/*.a)) 
 
 #其他库文件，一行一个
-STATIC_LIBS += -L$(PROTOC_PATH)/lib -lprotobuf 
+STATIC_LIBS += 
 
 #链接选项
 LDFLAGS = -lpthread
 LDFLAGS += -ldl
+LDFLAGS += -L$(PROTOC_PATH)/lib -lprotobuf 
 LDFLAGS += ${STATIC_LIBS}
 
 include ${PROTO_PATH}/pb_obj.include
@@ -57,13 +44,13 @@ SUBDIR = .
 CURR_SOURCES =$(foreach n,$(SUBDIR), $(wildcard $(n)/*.cpp)) 
 
 #其他外部依赖cpp文件在此处加上
-CURR_SOURCES += $(PB_OBJ)
+CURR_SOURCES += 
 
 #生成对应的.o文件
 CXX_OBJECTS = $(patsubst %.cpp, %.o, ${CURR_SOURCES})
 
 #添加自定义.o，这些.o不由clean删除，没有则无需填写
-EXT_OBJECTS +=
+EXT_OBJECTS += $(PB_OBJ)
 
 #生成依赖关系
 DEP_FILES += $(patsubst %.o, %.d, ${CXX_OBJECTS})
