@@ -1,0 +1,6 @@
+
+
+#define 
+
+PB_OBJ= \
+${PROTO_PATH}/AddressBook.pb.o \
