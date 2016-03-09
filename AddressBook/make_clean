@@ -1,2 +1,2 @@
 #/bin/bash
-rm -rf *.pb.cc *.pb.h *.pb.o *.pb.d
+rm -rf *.pb.cc *.pb.h *.pb.o *.pb.d *_pb2.py

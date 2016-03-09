@@ -1,0 +1,2 @@
+#/bin/bash
+/data/common/protobuf/bin/protoc --python_out=. *.proto
